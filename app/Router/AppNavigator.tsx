@@ -15,6 +15,7 @@ import SummaryPageAdmin from '../Container/Admins/SummaryPageAdmin';
 import UserListPageAdmin from '../Container/Admins/UserListPageAdmin';
 import ExchangeRatePage from '../Container/ExchangeRate';
 import ProfilePage from '../Container/ProfilePage';
+import ExpenseDetailPageAdmin from '../Container/Admins/ExpensesDetailPage';
 
 // User Stack
 import SummaryPageUser from '../Container/Users/SummaryPageUser';
@@ -201,6 +202,7 @@ const AppNavigator = () => {
         return (
             <Stack.Navigator initialRouteName='BottomTabNavigatorAdmin'>
                 <Stack.Screen name="BottomTabNavigatorAdmin" component={TabBarAdmin} options={{ headerShown: false }} />
+                <Stack.Screen name="ExpenseDetailPageAdmin" component={ExpenseDetailPageAdmin} options={{ headerShown: false }} />
             </Stack.Navigator>
         );
     };

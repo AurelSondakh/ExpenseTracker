@@ -51,9 +51,15 @@ const LoginPage = () => {
       const decoded = await handleDecodeToken(token, SECRET_KEY);
       if (decoded) {
         if (decoded?.role === 'admin') {
-          navigation.navigate('AdminStack');
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'AdminStack' }],
+          });
         } else if (decoded?.role === 'user') {
-          navigation.navigate('UserStack',);
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'UserStack' }],
+          });
         }
       }
     } catch (error) {

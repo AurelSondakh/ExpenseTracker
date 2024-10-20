@@ -6,6 +6,7 @@ import { formatCurrency } from '../../Hooks/formatCurrency';
 import Font from 'react-native-vector-icons/MaterialCommunityIcons';
 import DatePicker from 'react-native-date-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 type Breakdown = {
   category: string;
@@ -26,13 +27,21 @@ const AdminStats = () => {
   const [endDate, setEndDate] = useState<Date>(new Date('2024-10-31'));
   const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
   const [openEndDatePicker, setOpenEndDatePicker] = useState(false);
+  const navigation = useNavigation();
+
+  async function fetchAdminStats() {
+    const breakdown = await getAdminStats(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]);
+    setCategoryBreakdown(breakdown);
+  }
 
   useEffect(() => {
-    async function fetchAdminStats() {
-      const breakdown = await getAdminStats(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]);
-      setCategoryBreakdown(breakdown);
-    }
-
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchAdminStats();
+    });
+    return unsubscribe;
+  }, [navigation]);
+  
+  useEffect(() => {
     fetchAdminStats();
   }, [startDate, endDate]);
 
