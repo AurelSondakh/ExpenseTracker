@@ -1,14 +1,14 @@
 import React from "react";
 import {View, Text} from 'react-native';
 
-const HomePageUser = () => {
+const ProfilePage = () => {
     return (
         <View>
             <Text>
-                USER HOME PAGE
+                 PROFILE PAGE
             </Text>
         </View>
     )
 }
 
-export default HomePageUser
+export default ProfilePage

@@ -3,9 +3,8 @@ import AppNavigator from './app/Router/AppNavigator';
 import { Provider, useDispatch } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 // import rootReducer from './App/Redux/Reducers/index.js';
-import { createUserTable } from './app/Data/db';
+import { createUserTable,createUserExpenseTable } from './app/Data/db';
 import { getToken } from './app/Data/Auth';
-import { jwtDecode } from 'jwt-decode';
 
 // const store = configureStore({
 //   reducer: rootReducer
@@ -16,16 +15,7 @@ const App = () => {
 
   useEffect(() => {
     createUserTable();
-    console.log(userType)
-    const fetchUserType = async () => {
-      const token = await getToken();
-      if (token) {
-        const decoded: { role: string } = jwtDecode(token);
-        setUserType(decoded.role);
-      }
-    };
-
-    fetchUserType();
+    createUserExpenseTable();
   }, []);
 
   return (

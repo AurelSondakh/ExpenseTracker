@@ -53,7 +53,7 @@ const LoginPage = () => {
         if (decoded?.role === 'admin') {
           navigation.navigate('AdminStack');
         } else if (decoded?.role === 'user') {
-          navigation.navigate('UserStack');
+          navigation.navigate('UserStack',);
         }
       }
     } catch (error) {

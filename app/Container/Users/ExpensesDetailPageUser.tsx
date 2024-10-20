@@ -1,14 +1,14 @@
 import React from "react";
 import {View, Text} from 'react-native';
 
-const HomePageAdmin = () => {
+const ExpensesDetailPageUser = () => {
     return (
         <View>
             <Text>
-                ADMIN HOME PAGE
+                USER ExpensesDetail PAGE
             </Text>
         </View>
     )
 }
 
-export default HomePageAdmin
+export default ExpensesDetailPageUser
