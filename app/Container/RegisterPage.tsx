@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import DropdownET from '../Components/DropdownET';
 import TextInputET from '../Components/TextInputET';
+import { registerUser } from '../Data/Auth';
+import ErrorModal from '../Components/ErrorModal';
+import SuccessModal from '../Components/SuccessModal';
 
 type RootStackParamList = {
     LoginPage: undefined;
@@ -27,6 +30,8 @@ type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Reg
 const RegisterPage = () => {
     const [usernameFocus, setUsernameFocus] = useState<boolean>(false);
     const [passwordFocus, setPasswordFocus] = useState<boolean>(false);
+    const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+    const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
     const [roleFocus, setRoleFocus] = useState<boolean>(false);
     const [disable, setDisable] = useState<boolean>(true);
     const navigation = useNavigation<RegisterScreenNavigationProp>();
@@ -37,8 +42,14 @@ const RegisterPage = () => {
         { label: 'Admin', value: 'admin' },
     ];
 
-    const validateRegisterCredential = () => {
-        console.log(registerForm, 'REGISTER FORM');
+    const handleRegister = async (): Promise<void> => {
+        try {
+          await registerUser(registerForm);
+          setShowSuccessModal(true)
+        } catch (error) {
+          console.error("Error during registration:", error);
+          setShowErrorModal(true)
+        }
     };
 
     useEffect(() => {
@@ -73,7 +84,7 @@ const RegisterPage = () => {
                     title='Password'
                     placeholder='Input password'
                     focus={passwordFocus}
-                    value={registerForm?.password}
+                    value={registerForm?.password}  
                     setText={text => onHandleChange(text, 'password')}
                     setIsFocused={value => setPasswordFocus(value)}
                     secureText={true}
@@ -88,7 +99,7 @@ const RegisterPage = () => {
                 />
                 <TouchableOpacity
                     disabled={disable}
-                    onPress={() => validateRegisterCredential()}
+                    onPress={() => handleRegister()}
                     style={!disable ? styles.registerButton : styles.disableregisterButton}
                 >
                     <Text style={styles.registerButtonText}>REGISTER</Text>
@@ -105,6 +116,25 @@ const RegisterPage = () => {
                     </TouchableOpacity>
                 </View>
             </View>
+            {showErrorModal &&
+              <ErrorModal 
+                title='Register Failed'
+                description='Username already exists or other issue occurred'
+                buttonText='Close'
+                showModal={showErrorModal}
+                setShowModal={value => setShowErrorModal(value)}
+              />
+            }
+            {showSuccessModal &&
+              <SuccessModal
+                title='Register Success'
+                description='You can now login'
+                buttonText='Close'
+                method={() => navigation.navigate('LoginPage')}
+                showModal={showSuccessModal}
+                setShowModal={value => setShowSuccessModal(value)}
+              />
+            }
         </View>
     )
 }

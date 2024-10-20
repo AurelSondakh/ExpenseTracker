@@ -1,6 +1,6 @@
 import React from "react";
 import {View, Text, StyleSheet} from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown';
+import { Dropdown } from "react-native-element-dropdown";
 
 type DataDropdownProps = {
     label: string;
@@ -47,8 +47,8 @@ const DropdownET: React.FC<DropdownETProps> = ({
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
                 onChange={item => {
-                setSelectedChoice(item.value);
-                setIsFocused(false);
+                    setSelectedChoice(item?.value);
+                    setIsFocused(false);
                 }}
             />
         </View>

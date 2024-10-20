@@ -6,6 +6,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RegisterPage from '../Container/RegisterPage';
 import LoginPage from '../Container/LoginPage';
 
+// Admin Stack
+import HomePageAdmin from '../Container/Admins/HomePageAdmin';
+
+// User Stack
+import HomePageUser from '../Container/Users/HomePageUser';
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -66,11 +72,29 @@ const AppNavigator = () => {
     //     )
     // }
 
+    const AdminStack = () => {
+        return (
+            <Stack.Navigator initialRouteName='HomePageAdmin'>
+                <Stack.Screen name="HomePageAdmin" component={HomePageAdmin} options={{ headerShown: false }} />
+            </Stack.Navigator>
+        );
+    };
+    
+    const UserStack = () => {
+        return (
+            <Stack.Navigator initialRouteName='HomePageUser'>
+                <Stack.Screen name="HomePageUser" component={HomePageUser} options={{ headerShown: false }} />
+            </Stack.Navigator>
+        );
+    };
+
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName='LoginPage'>
                 <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
                 <Stack.Screen name="RegisterPage" component={RegisterPage} options={{ headerShown: false }} />
+                <Stack.Screen name="AdminStack" component={AdminStack} options={{ headerShown: false }} />
+                <Stack.Screen name="UserStack" component={UserStack} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

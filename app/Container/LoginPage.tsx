@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputET from '../Components/TextInputET';
+import { loginUser } from '../Data/Auth';
+import { decode } from "react-native-pure-jwt";
+import ErrorModal from '../Components/ErrorModal';
+import { SECRET_KEY } from '@env';
 
 type RootStackParamList = {
   LoginPage: undefined;
   RegisterPage: undefined;
+  AdminStack: undefined;
+  UserStack: undefined;
 };
 
 type LoginFormProps = {
@@ -25,12 +31,37 @@ const LoginPage = () => {
   const [usernameFocus, setUsernameFocus] = useState<boolean>(false);
   const [passwordFocus, setPasswordFocus] = useState<boolean>(false);
   const [disable, setDisable] = useState<boolean>(true);
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(false)
   const [loginForm, setLoginForm] = useState<LoginFormProps>(LoginFormInitialState);
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
-  const validateLoginCredential = () => {
-    console.log(loginForm, 'LOGIN FORM');
+  const handleDecodeToken = async (token: string, secret: string) => {
+    try {
+      const decodedToken = await decode(token, secret);
+      return decodedToken?.payload;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  };  
+
+  const handleLogin = async (): Promise<void> => {
+    try {
+      const { user, token } = await loginUser(loginForm);
+      const decoded = await handleDecodeToken(token, SECRET_KEY);
+      if (decoded) {
+        if (decoded?.role === 'admin') {
+          navigation.navigate('AdminStack');
+        } else if (decoded?.role === 'user') {
+          navigation.navigate('UserStack');
+        }
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setShowErrorModal(true);
+    }
   };
+  
 
   useEffect(() => {
     if(loginForm?.username !== '' && loginForm?.password !== '') {
@@ -71,7 +102,7 @@ const LoginPage = () => {
         />
         <TouchableOpacity
           disabled={disable}
-          onPress={() => validateLoginCredential()}
+          onPress={() => handleLogin()}
           style={!disable ? styles.loginButton : styles.disableLoginButton}
         >
           <Text style={styles.loginButtonText}>LOGIN</Text>
@@ -87,6 +118,15 @@ const LoginPage = () => {
           </TouchableOpacity>
         </View>
       </View>
+      {showErrorModal && (
+        <ErrorModal 
+          title='Login Failed'
+          description='Invalid username or password'
+          buttonText='Close'
+          showModal={showErrorModal}
+          setShowModal={value => setShowErrorModal(value)}
+        />
+      )}
     </View>
   );
 };
