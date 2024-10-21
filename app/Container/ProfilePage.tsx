@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 20,
+    color: '#000'
   },
 });
 

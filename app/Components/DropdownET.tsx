@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderRadius: 8,
         paddingHorizontal: 15,
+        color: '#000'
     },
     placeholderStyle: {
         fontSize: 14,

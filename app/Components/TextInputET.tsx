@@ -35,7 +35,7 @@ const TextInputET: React.FC<TextInputETProps> = ({
                 secureTextEntry={secureText}
                 style={[
                 styles.input,
-                { borderBottomColor: !focus ? '#000' : '#505383' }
+                { borderBottomColor: !focus ? '#000' : '#505383', color: '#000' }
                 ]}
                 onChangeText={text => {
                 setText(text);

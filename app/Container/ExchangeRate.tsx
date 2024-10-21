@@ -71,13 +71,13 @@ const ExchangeRatePage = () => {
           />
           <View style={{ marginBottom: 24 }} />
           <Button title="Convert" onPress={handleConversion} />
-    
-          {(conversionRate > 0 && resetState) ? (
+          {console.log(conversionRate, resetState)}
+          {(conversionRate > 0 && !resetState) ? (
             <Text style={styles.result}>
               Conversion Rate: {conversionRate} {selectedToCurrency} per {selectedFromCurrency}
             </Text>
           ) : null}
-          {(conversionResult > 0 && resetState) ? (
+          {(conversionResult > 0 && !resetState) ? (
             <Text style={styles.result}>
               Total: {selectedFromCurrency} {amount} = {selectedToCurrency} {conversionResult}
             </Text>
