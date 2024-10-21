@@ -1,79 +1,38 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+** Versioning ** 
+Node : 18.18.1
+Java : 19
+npm : 9.8.1
 
-# Getting Started
+** How to Build ** 
+1. Clone Repository (Make sure it was on C:/ Directory since it has issue regarding https://github.com/software-mansion/react-native-reanimated/issues/4712#issuecomment-1853457018)
+2. run "npm install --force"
+3. setup android studio and emulator API level 34
+4. run "npx react-native start --experimental-debugger" (you can press J if u want to debug)
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+** Software Architecture & Design Paterns **
+Feature-Based Structure - Flux / Redux - Component-Based Architecture
+The Route Contains of 
+- Assets: for saving some images and fonts(Poppins)
+- Components: for small components that can be reusable
+- Configs: for Global variable
+- Container: for Main or Parent Screen
+- Data: for manage the data that has been used for user table and userexpense table
+- Hooks: for global function that can be used in other components or containers
+- Redux: State Management (Action, Constant, Reducer)
+- Router: App Navigation and Stacks
 
-## Step 1: Start the Metro Server
+** Additional Feature **
+- Register Page
+- Profile Page
+- Forgot Password in Profile Page
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+** More Information **
+When the application runs for the first time, it will automatically create four users with the following credentials:
 
-To start Metro, run the following command from the _root_ of your React Native project:
+Username: admin, Password: test123, Role: admin
+Username: usersatu, Password: test123, Role: user
+Username: userdua, Password: test123, Role: user
+Username: usertiga, Password: test123, Role: user
+You can create new users during the registration process. Additionally, you can change your password after logging in through the profile menu. However, please note that if the app is destroyed, causing it to reload, any data you have added or edited will be lost, and the available data will revert to the initial setup.
 
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+The same applies to user expenses, where each user has ten entries divided into five categories: Entertainment, Food, Transport, Utilities, and Rent. You can edit or delete entries using the admin role, but once the application is reloaded, the data will revert to the initial setup.
